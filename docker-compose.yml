@@ -6,5 +6,5 @@ services:
     ports:
       - "3000:${PORT}"
     volumes:
-      - /app/node_modules
-      - .:/app
+      - /app/node_modules # don't overwrite the containers app module on changes
+      - .:/app # map changes from root of local machine to the /app folder
