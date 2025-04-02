@@ -1,0 +1,10 @@
+FROM node:alpine AS development-dependencies
+COPY . /app
+WORKDIR /app
+RUN npm ci
+
+FROM node:alpine
+COPY ./package.json package-lock.json /app/
+COPY --from=development-dependencies /app/ /app/
+WORKDIR /app
+CMD ["npm", "run", "start"]
