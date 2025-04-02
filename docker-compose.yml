@@ -1,0 +1,10 @@
+services:
+  web-react-app:
+    build:
+      context: .
+      dockerfile: ${DOCKER_FILE}
+    ports:
+      - "3000:${PORT}"
+    volumes:
+      - /app/node_modules
+      - .:/app
