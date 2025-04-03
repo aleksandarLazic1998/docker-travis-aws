@@ -11,14 +11,23 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      # Login to Docker Hub
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      # Build the Docker image using Dockerfile.dev
+      - name: Build Docker Image for Testing
+        run: docker build -t cygnetops/react-test -f Dockerfile.dev .
+
+      # Run tests inside the Docker container
+      - name: Run Tests
+        run: docker run -e CI=true cygnetops/react-test npm test
+
+      # Build and push the final Docker image
       - name: Build and Push Docker Image
         uses: mr-smithers-excellent/docker-build-push@v4
         with:
-          image: aleksandarlazic1998po/private-repo
+          image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_REPO_NAME }}
           registry: docker.io
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-
-      # - run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-      # - run: docker build -t cygnetops/react-test -f Dockerfile.dev .
-      # - run: docker run -e CI=true cygnetops/react-test npm test
