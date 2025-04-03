@@ -8,3 +8,11 @@ services:
     volumes:
       - /app/node_modules # don't overwrite the containers app module on changes
       - .:/app # map changes from root of local machine to the /app folder
+  # web-react-app-test:
+  #   build:
+  #     context: .
+  #     dockerfile: ${DOCKER_FILE}
+  #   volumes:
+  #     - /app/node_modules # don't overwrite the containers app module on changes
+  #     - .:/app # map changes from root of local machine to the /app folder
+  #   command: ["npm", "run", "test"]
